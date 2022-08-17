@@ -42,11 +42,13 @@ times `advancedExponent` is being recursively called.
 
 function advancedExponent(b, n) {
   // your code here
-  return n === 0 ? 1 : n === 1 ? b : n % 2 === 0 ? advancedExponent(b, n / 2) ** 2 : b * (advancedExponent(b, (n - 1) / 2) ** 2)
+  if(n === 0) return 1
+  if(n === 1) return b
+
+  const value = advancedExponent(b, Math.floor(n / 2))
+
+  return n % 2 === 0 ? value * value : b * (value * value)
 }
-
-console.log(advancedExponent(2, 12)); // 4096
-
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
