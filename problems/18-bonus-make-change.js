@@ -84,16 +84,16 @@ function makeBetterChange(target, coins = [25, 10, 5, 1]) {
   // your code here
   if(target === 0) return []    // base case
 
-  // removing elements that are greater than target and sort it in descending order
+  // removing elements that are greater values than target and sort it in descending order
   const filteredCoins = coins.filter(d => d <= target).sort((a, b) => b - a)
   // If no coin remains, return null
   if(filteredCoins.length === 0) return null  // base case
 
-  // Put greatest coin out from filtered coins array, and calculate the maximum number of greatest coins less than or equal to target
+  // Put the maximum value coins out from filtered coins array, and calculate the maximum number of the maximum value coins less than or equal to target
   const maxCoin = filteredCoins.shift()
   const maxQuotient = ~~(target / maxCoin)
 
-  // If target is divisible by greatest coin, return array that has the number of greatest coins since it is the least length
+  // If target is divisible by the maximum value coin, return array that has the number of the maximum value coins since it will be the minimum length
   if(target === maxCoin * maxQuotient) return Array(maxQuotient).fill(maxCoin)
 
   // Initializing best result
