@@ -80,20 +80,36 @@ combinations.
 // console.log(greedyMakeChange(34, [15, 3])); // null
 // console.log(greedyMakeChange(24, [10, 7, 1])) // [7, 7, 10]
 
-// function makeBetterChange(target, coins = [25, 10, 5, 1]) {
-//   // your code here
-//   const changes = Array.from({length: coins.lengths}, () => [])
-//   for(let i = coins.length - 1; i >= 0; i--){
+function makeBetterChange(target, coins = [25, 10, 5, 1]) {
+  // your code here
+  if(target === 0) return []    // base case
 
-//   }
-// }
+  // removing elements that are greater than target and sort it in descending order
+  const filteredCoins = coins.filter(d => d <= target).sort((a, b) => b - a)
+  // If no coin remains, return null
+  if(filteredCoins.length === 0) return null  // base case
 
-// console.log(makeBetterChange(21)); // [1, 10, 10]
-// console.log(makeBetterChange(75)); // [25, 25, 25]
-// console.log(makeBetterChange(33, [15, 3])); // [3, 15, 15]
-// console.log(makeBetterChange(34, [15, 3])); // null
-// console.log(makeBetterChange(24, [10, 7, 1])) // [7, 7, 10]
+  // Put greatest coin out from filtered coins array, and calculate the maximum number of greatest coins less than or equal to target
+  const maxCoin = filteredCoins.shift()
+  const maxQuotient = ~~(target / maxCoin)
 
+  // If target is divisible by greatest coin, return array that has the number of greatest coins since it is the least length
+  if(target === maxCoin * maxQuotient) return Array(maxQuotient).fill(maxCoin)
+
+  // Initializing best result
+  let bestResult = null
+
+  for(let i = maxQuotient; i >= 0; i--){
+    // Call recursive function to get array that has coins
+    const thisResult = makeBetterChange(target - (maxCoin * i), filteredCoins)
+    if(thisResult !== null) { // if this result has coins
+      // and if this result has less coins than best result, store this result to best result
+      if(bestResult === null || thisResult.length + i < bestResult.length) bestResult = [...thisResult, ...Array(i).fill(maxCoin)]
+    }
+  }
+
+  return bestResult
+}
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {

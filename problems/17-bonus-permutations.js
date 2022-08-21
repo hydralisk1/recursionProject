@@ -26,7 +26,7 @@ const permutations = (arr, n = 0) => {
     // deep copy not to mutate original array
     const copyArr = arr.slice()
     // swap the first element and ith element
-    // for some reason, destrucing doesn't work
+    // for some reason, destructuring doesn't work
     const temp = copyArr[n]
     copyArr[n] = copyArr[i]
     copyArr[i] = temp

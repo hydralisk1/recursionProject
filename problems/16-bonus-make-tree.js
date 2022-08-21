@@ -63,13 +63,32 @@ The call above should return the tree below:
 
 ***********************************************************************/
 
+//                            cats
 const makeTree = (categories, parent) => {
-  // your code here
-  const obj = {}
-  categories.filter(d => d.parent === parent).forEach(d => obj[d.id] = makeTree(categories, d.id))
+  let temp = {};
 
-  return obj
-};
+  for (let obj of categories) {
+      if (obj.parent === parent) {
+          let newParent = obj.id;
+          temp[newParent] = makeTree(categories, newParent)
+      }
+  }
+  return temp;
+}
+
+const categories2 = [
+  { id: 'animals', 'parent': null },
+
+  { id: 'mammals', 'parent': 'animals' },
+  { id: 'cats', 'parent': 'mammals' },
+  { id: 'dogs', 'parent': 'mammals' },
+  { id: 'chihuahua', 'parent': 'dogs' },
+  { id: 'labrador', 'parent': 'dogs' },
+  { id: 'persian', 'parent': 'cats' },
+  { id: 'siamese', 'parent': 'cats' }
+];
+
+const tree2 = makeTree(categories2, null);
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
